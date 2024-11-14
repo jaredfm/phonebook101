@@ -33,6 +33,17 @@ app.get('/api/contacts', (request, response) => {
   response.json(contacts);
 });
 
+app.get('/api/contacts/:id', (request, response) => {
+  const id = request.params.id;
+  const contact = contacts.find(contact => contact.id === id);
+
+  if (contact) {
+    response.json(contact);
+  } else {
+    response.status(404).end();
+  }
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
