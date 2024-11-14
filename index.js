@@ -31,6 +31,10 @@ const generateId = () => {
   return String(Math.floor(Math.random() * 10000));
 }
 
+const contactExist = (name) => {
+  return contacts.find(contact => contact.name === name);
+}
+
 app.get('/info', (request, response) => {
   response.send(`<p> Phonebook has info for ${contacts.length} people <br /> <p> ${Date()} </p>`);
 });
@@ -52,6 +56,24 @@ app.get('/api/contacts/:id', (request, response) => {
 
 app.post('/api/contacts', (request, response) => {
   const body = request.body;
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: "Name missing"
+    });
+  }
+
+  if (!body.number) {
+    return response.status(400).json({
+      error: "Number missing"
+    });
+  }
+
+  if (contactExist(body.name)) {
+    return response.status(409).json({
+      error: "The contact already exist"
+    });
+  }
 
   const contact = {
     id: generateId(),
