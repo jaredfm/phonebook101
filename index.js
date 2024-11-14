@@ -2,6 +2,8 @@ const express = require('express');
 
 const app = express();
 
+app.use(express.json());
+
 let contacts = [
   {
     "id": "1",
@@ -25,6 +27,10 @@ let contacts = [
   }
 ];
 
+const generateId = () => {
+  return String(Math.floor(Math.random() * 10000));
+}
+
 app.get('/info', (request, response) => {
   response.send(`<p> Phonebook has info for ${contacts.length} people <br /> <p> ${Date()} </p>`);
 });
@@ -42,6 +48,20 @@ app.get('/api/contacts/:id', (request, response) => {
   } else {
     response.status(404).end();
   }
+});
+
+app.post('/api/contacts', (request, response) => {
+  const body = request.body;
+
+  const contact = {
+    id: generateId(),
+    name: body.name,
+    number: body.number
+  };
+
+  contacts = contacts.concat(contact);
+
+  response.json(contact);
 });
 
 app.delete('/api/contacts/:id', (request, response) => {
