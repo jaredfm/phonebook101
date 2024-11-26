@@ -56,14 +56,9 @@ app.get('/api/contacts', (request, response) => {
 });
 
 app.get('/api/contacts/:id', (request, response) => {
-  const id = request.params.id;
-  const contact = contacts.find(contact => contact.id === id);
-
-  if (contact) {
+  Contact.findById(request.params.id).then(contact => {
     response.json(contact);
-  } else {
-    response.status(404).end();
-  }
+  });
 });
 
 app.post('/api/contacts', (request, response) => {
@@ -87,15 +82,14 @@ app.post('/api/contacts', (request, response) => {
     });
   }
 
-  const contact = {
-    id: generateId(),
+  const contact = new Contact({
     name: body.name,
     number: body.number
-  };
+  });
 
-  contacts = contacts.concat(contact);
-
-  response.json(contact);
+  contact.save().then(newContact => {
+    response.json(contact);
+  });
 });
 
 app.delete('/api/contacts/:id', (request, response) => {

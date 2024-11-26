@@ -2,13 +2,13 @@
 
 ## Description
 
-**Phonebook** with the Frontend in React JS and a API REST in Node JS deployed in **_Fly.io_**. The application allows you to performance operations like _GET_ all the contact list, _ADD_ new contacts, _DELETE_ an existent contact and _MODIFY_ the phone number if the contact exists in the phonebook.
+**Phonebook** with the Frontend in React JS, a API REST in Node JS and the database in MongoDB. Deployed in **_Fly.io_**. The application allows you to performance operations like _GET_ all the contact list, _ADD_ new contacts, _DELETE_ an existent contact and _MODIFY_ the phone number if the contact exists in the phonebook.
 
 ## Routes of the application
 
 - Link of the deploy: https://phonebookbackend101.fly.dev/
 - Link of the information resource: https://phonebookbackend101.fly.dev/info
-- Link of the API: https://phonebookbackend101.fly.dev/api/contacts
+- Link of the API view: https://phonebookbackend101.fly.dev/api/contacts
 
 ## Installation
 
