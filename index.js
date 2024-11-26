@@ -1,6 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+
+const Contact = require('./models/contact.js');
 
 const app = express();
 
@@ -47,7 +50,9 @@ app.get('/info', (request, response) => {
 });
 
 app.get('/api/contacts', (request, response) => {
-  response.json(contacts);
+  Contact.find({}).then(contacts => {
+    response.json(contacts);
+  });
 });
 
 app.get('/api/contacts/:id', (request, response) => {
