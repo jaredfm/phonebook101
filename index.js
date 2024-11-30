@@ -46,7 +46,11 @@ const contactExist = (name) => {
 }
 
 app.get('/info', (request, response) => {
-  response.send(`<p> Phonebook has info for ${contacts.length} people <br /> <p> ${Date()} </p>`);
+  Contact.find({})
+    .then(contacts => {
+      response.send(`<p> Phonebook has info for ${contacts.length} people <br /> <p> ${Date()} </p>`); 
+    })
+    .catch(error => next(error));
 });
 
 app.get('/api/contacts', (request, response) => {
@@ -55,10 +59,12 @@ app.get('/api/contacts', (request, response) => {
   });
 });
 
-app.get('/api/contacts/:id', (request, response) => {
-  Contact.findById(request.params.id).then(contact => {
-    response.json(contact);
-  });
+app.get('/api/contacts/:id', (request, response, next) => {
+  Contact.findById(request.params.id)
+    .then(contact => {
+      response.json(contact);
+    })
+    .catch(error => next(error));
 });
 
 app.post('/api/contacts', (request, response) => {
@@ -92,7 +98,7 @@ app.post('/api/contacts', (request, response) => {
   });
 });
 
-app.put('/api/contacts/:id', (request, response) => {
+app.put('/api/contacts/:id', (request, response, next) => {
   const body = request.body;
 
   const contact = {
